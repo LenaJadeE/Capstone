@@ -27,6 +27,17 @@ public class ShoppingCart {
 
     public double getTotal() {
         double total = 0.0;
-        for ()
+        for (ItemsInCart item : items.values()) {
+            total += item.getLineTotal();
+        }
+        return total;
+    }
+
+    public boolean isEmpty() {
+        return items.isEmpty();
+    }
+
+    public void clear() {
+        items.clear();
     }
 }
