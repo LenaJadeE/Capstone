@@ -127,17 +127,33 @@ public class App {
     }
 
     private static void displayDeposits() {
-        System.out.println("TODO: display deposits");
+        List<Transaction> deposits = new ArrayList<>();
+        for (Transaction transaction : transactions) {
+            if (transaction.getAmount() > 0) {
+                deposits.add(transaction);
+            }
+        }
+
+        displayEntries("Deposits", deposits);
         pressEnterToContinue();
     }
 
     private static void displayPayments() {
-        System.out.println("TODO: display payments");
+        List<Transaction> payments = new ArrayList<>();
+        for (Transaction transaction : transactions) {
+            if (transaction.getAmount() < 0) {
+                payments.add(transaction);
+            }
+        }
+
+        displayEntries("Payments", payments);
         pressEnterToContinue();
     }
 
     private static void displayMonthToDate() {
-        System.out.println("TODO: display month to date");
+        LocalDate today = LocalDate.now();
+
+        displayEntries("Month To Date", findByMonth(today.getYear(), today.getMonthValue()));
         pressEnterToContinue();
     }
 
@@ -222,6 +238,18 @@ public class App {
             System.out.println("Skipping a line that isn't in date|time|description|vendor|amount format: " + line);
         }
     }
+
+    private static List<Transaction> findByMonth(int year, int month) {
+        List<Transaction> matches = new ArrayList<>();
+        for (Transaction transaction : transactions) {
+            if (transaction.getDate().getYear() == year && transaction.getDate().getMonthValue() == month) {
+                matches.add(transaction);
+            }
+        }
+        return matches;
+    }
+
+
 
     private static void displayEntries(String title, List<Transaction> entries) {
         System.out.println();
