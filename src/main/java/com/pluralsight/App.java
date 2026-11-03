@@ -1,7 +1,16 @@
 package com.pluralsight;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class App {
@@ -168,9 +177,9 @@ public class App {
             boolean newFile = !Files.exists(file) || Files.size(file) == 0;
             boolean needsLineBreak = !newFile && !endsWithLineBreak(file);
 
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(TRANSACTIONS_FILE, true))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(TransactionsFile, true))) {
                 if (newFile) {
-                    writer.write(FILE_HEADER + "\n");
+                    writer.write(FileHeader + "\n");
                 }
                 if (needsLineBreak) {
                     writer.write("\n");
@@ -181,7 +190,7 @@ public class App {
             transactions.add(transaction);
             return true;
         } catch (IOException e) {
-            System.out.println("ERROR: Could not save to " + TRANSACTIONS_FILE + ": " + e.getMessage());
+            System.out.println("ERROR: Could not save to " + TransactionsFile + ": " + e.getMessage());
             return false;
         }
     }
@@ -195,5 +204,31 @@ public class App {
         System.out.println();
         System.out.print("Press Enter to go back to the menu...");
         scanner.nextLine();
+    }
+
+    private static double promptForDouble(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            try {
+                return Double.parseDouble(scanner.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a number, like 89.50.");
+            }
+        }
+    }
+
+    private static String promptForString(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+
+            if (input.isEmpty()) {
+                System.out.println("This can't be blank.");
+            } else if (input.contains("|")) {
+                System.out.println("Please don't use the | character.");
+            } else {
+                return input;
+            }
+        }
     }
 }
