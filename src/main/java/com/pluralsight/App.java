@@ -1,25 +1,28 @@
 package com.pluralsight;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class App {
     private static final String TransactionsFile = "transactions.csv";
-    private static final String FileHeader = "date|time|description|vendor|amount";
+    private static final DateTimeFormatter TimeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private static final String RowFormat = "%-10s  %-8s  %-30s  %-22s  %10s%n";
     private static final Scanner scanner = new Scanner(System.in);
     private static final List<Transaction> transactions = new ArrayList<>();
 
     public static void main(String[] args) {
+        loadTransactions();
         runHomeScreen();
     }
 
@@ -29,7 +32,7 @@ public class App {
             System.out.println();
             System.out.println(" Home ");
             System.out.println("D) Add Deposit");
-            System.out.println("P) Make Payment (Debit)");
+            System.out.println("P) Make Payment");
             System.out.println("L) Ledger");
             System.out.println("X) Exit");
             System.out.print("Enter a command: ");
@@ -98,10 +101,10 @@ public class App {
     private static void addDeposit() {
         System.out.println();
         System.out.println(" Add Deposit ");
-        Transaction deposit = askForTransation(1);
+        Transaction deposit = askForTransaction(1);
 
         if (saveTransaction(deposit)) {
-            System.out.printf(Locale.US, "Saved deposit of $%.2f from %s.%n", deposit.getAmount(), deposit.getVendor());
+            System.out.printf("Saved deposit of $%.2f from %s.%n", deposit.getAmount(), deposit.getVendor());
         }
         pressEnterToContinue();
     }
@@ -112,13 +115,14 @@ public class App {
         Transaction payment = askForTransaction(-1);
 
         if (saveTransaction(payment)) {
-            System.out.printf(Locale.US, "Saved payment of $%.2f to %s.%n", -payment.getAmount(), payment.getVendor());
+            System.out.printf("Saved payment of $%.2f to %s.%n", -payment.getAmount(), payment.getVendor());
         }
         pressEnterToContinue();
     }
 
+
     private static void displayAllEntries() {
-        System.out.println("TODO: display all entries");
+        displayEntries("All Transactions", transactions);
         pressEnterToContinue();
     }
 
@@ -167,26 +171,18 @@ public class App {
             amount = promptForDouble("Amount: ");
         }
 
-        return new Transaction(LocalDate.now(), LocalTime.now().truncatedTo(ChronoUnit.SECONDS),
+        return new Transaction(LocalDate.now(), LocalTime.now(),
                 description, vendor, sign * amount);
     }
 
     private static boolean saveTransaction(Transaction transaction) {
-        Path file = Path.of(TransactionsFile);
-        try {
-            boolean newFile = !Files.exists(file) || Files.size(file) == 0;
-            boolean needsLineBreak = !newFile && !endsWithLineBreak(file);
-
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(TransactionsFile, true))) {
-                if (newFile) {
-                    writer.write(FileHeader + "\n");
-                }
-                if (needsLineBreak) {
-                    writer.write("\n");
-                }
-                writer.write(transaction.toFileLine() + "\n");
-            }
-
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(TransactionsFile, true))) {
+            String line = transaction.getDate() + "|"
+                    + transaction.getTime().format(TimeFormat) + "|"
+                    + transaction.getDescription() + "|"
+                    + transaction.getVendor() + "|"
+                    + String.format("%.2f", transaction.getAmount());
+            writer.write(line + "\n");
             transactions.add(transaction);
             return true;
         } catch (IOException e) {
@@ -195,9 +191,76 @@ public class App {
         }
     }
 
-    private static boolean endsWithLineBreak(Path file) throws IOException {
-        byte[] bytes = Files.readAllBytes(file);
-        return bytes[bytes.length - 1] == '\n';
+    private static void loadTransactions() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(TransactionsFile))) {
+            reader.readLine();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (!line.isBlank()) {
+                    addTransactionFromLine(line);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("No " + TransactionsFile + " found, so the ledger starts empty.");
+        } catch (IOException e) {
+            System.out.println("ERROR: Could not read " + TransactionsFile + ": " + e.getMessage());
+        }
+    }
+
+    private static void addTransactionFromLine(String line) {
+        try {
+            String[] parts = line.split("\\|");
+
+            LocalDate date = LocalDate.parse(parts[0]);
+            LocalTime time = LocalTime.parse(parts[1]);
+            String description = parts[2];
+            String vendor = parts[3];
+            double amount = Double.parseDouble(parts[4]);
+
+            transactions.add(new Transaction(date, time, description, vendor, amount));
+        } catch (DateTimeParseException | NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            System.out.println("Skipping a line that isn't in date|time|description|vendor|amount format: " + line);
+        }
+    }
+
+    private static void displayEntries(String title, List<Transaction> entries) {
+        System.out.println();
+        System.out.println("=== " + title + " ===");
+
+        if (entries.isEmpty()) {
+            System.out.println("No transactions found.");
+            return;
+        }
+
+        System.out.printf(RowFormat, "Date", "Time", "Description", "Vendor", "Amount");
+        for (Transaction transaction : entries) {
+            System.out.printf(RowFormat,
+                    transaction.getDate(),
+                    transaction.getTime().format(TimeFormat),
+                    transaction.getDescription(),
+                    transaction.getVendor(),
+                    String.format("%.2f", transaction.getAmount()));
+        }
+
+        System.out.println();
+        System.out.println(entries.size() + (entries.size() == 1 ? " transaction" : " transactions"));
+        System.out.println("Total: " + formatMoney(sumOf(entries)));
+    }
+
+    private static double sumOf(List<Transaction> entries) {
+        double total = 0;
+        for (Transaction transaction : entries) {
+            total += transaction.getAmount();
+        }
+        return total;
+    }
+
+    private static String formatMoney(double amount) {
+        String text = String.format("$%,.2f", Math.abs(amount));
+        if (amount < 0) {
+            return "-" + text;
+        }
+        return text;
     }
 
     private static void pressEnterToContinue() {

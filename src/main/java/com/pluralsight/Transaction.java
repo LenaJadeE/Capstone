@@ -2,19 +2,17 @@ package com.pluralsight;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+
 
 public class Transaction {
 
-    private static final DateTimeFormatter TimeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private LocalDate date;
+    private LocalTime time;
+    private String description;
+    private String vendor;
+    private double amount;
 
-    private final LocalDate date;
-    private final LocalTime time;
-    private final String description;
-    private final String vendor;
-    private final double amount;
-
-    public Transaction(LocalDate date, LocalTime time, String description) {
+    public Transaction(LocalDate date, LocalTime time, String description, String vendor, double amount) {
         this.date = date;
         this.time = time;
         this.description = description;
@@ -26,7 +24,7 @@ public class Transaction {
         return date;
     }
 
-    public String getFormattedTime() {
+    public LocalTime getTime() {
         return time;
     }
 
@@ -41,8 +39,4 @@ public class Transaction {
     public double getAmount() {
         return amount;
     }
-
-    public String toFileLine() {
-        return date + "|" + getFormattedTime() + "|" + description + "|" + vendor + "|"
-                + String.format(Locale.US, "%.2f", amount);
 }
