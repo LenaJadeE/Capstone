@@ -241,9 +241,9 @@ public class App {
 
             transactions.add(new Transaction(date, time, description, vendor, amount));
         } catch (DateTimeParseException e) {
-            System.out.println("Skipping a line that isn't in date|time|description|vendor|amount format: " + line);
+            System.out.println("Skipping a line with a date or time that can't be read: " + line);
         } catch (NumberFormatException e) {
-            System.out.println("Skipping a line that isn't in date|time|description|vendor|amount format: " + line);
+            System.out.println("Skipping a line with an amount that can't be read: " + line);
         }
     }
 
