@@ -2,6 +2,7 @@ package com.pluralsight;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -9,12 +10,15 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class App {
     private static final String TRANSACTIONS_FILE = "transactions.csv";
+    private static final String FILE_HEADER = "date|time|description|vendor|amount";
+    private static final double ZERO_TOLERANCE = 0.005;
     private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss");
     private static final String ROW_FORMAT = "%-10s  %-8s  %-30s  %-22s  %10s%n";
     private static final Scanner scanner = new Scanner(System.in);
@@ -125,26 +129,12 @@ public class App {
     }
 
     private static void displayDeposits() {
-        List<Transaction> deposits = new ArrayList<>();
-        for (Transaction transaction : transactions) {
-            if (transaction.getAmount() > 0) {
-                deposits.add(transaction);
-            }
-        }
-
-        displayEntries("Deposits", deposits);
+        displayEntries("Deposits", findDeposits());
         pressEnterToContinue();
     }
 
     private static void displayPayments() {
-        List<Transaction> payments = new ArrayList<>();
-        for (Transaction transaction : transactions) {
-            if (transaction.getAmount() < 0) {
-                payments.add(transaction);
-            }
-        }
-
-        displayEntries("Payments", payments);
+        displayEntries("Payments", findPayments());
         pressEnterToContinue();
     }
 
@@ -175,14 +165,7 @@ public class App {
     private static void searchByVendor() {
         String vendor = promptForString("Vendor name: ");
 
-        List<Transaction> matches = new ArrayList<>();
-        for (Transaction transaction : transactions) {
-            if (transaction.getVendor().equalsIgnoreCase(vendor)) {
-                matches.add(transaction);
-            }
-        }
-
-        displayEntries("Vendor: " + vendor, matches);
+        displayEntries("Vendor: " + vendor, findByVendor(vendor));
         pressEnterToContinue();
     }
 
@@ -201,19 +184,28 @@ public class App {
     }
 
     private static boolean saveTransaction(Transaction transaction) {
+        File file = new File(TRANSACTIONS_FILE);
+        boolean isNewFile = !file.exists() || file.length() == 0;
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(TRANSACTIONS_FILE, true))) {
-            String line = transaction.getDate() + "|"
-                    + transaction.getTime().format(TIME_FORMAT) + "|"
-                    + transaction.getDescription() + "|"
-                    + transaction.getVendor() + "|"
-                    + String.format("%.2f", transaction.getAmount());
-            writer.write(line + "\n");
+            if (isNewFile) {
+                writer.write(FILE_HEADER + "\n");
+            }
+            writer.write(buildLine(transaction) + "\n");
             transactions.add(transaction);
             return true;
         } catch (IOException e) {
             System.out.println("ERROR: Could not save to " + TRANSACTIONS_FILE + ": " + e.getMessage());
             return false;
         }
+    }
+
+    private static String buildLine(Transaction transaction) {
+        return transaction.getDate() + "|"
+                + transaction.getTime().format(TIME_FORMAT) + "|"
+                + transaction.getDescription() + "|"
+                + transaction.getVendor() + "|"
+                + String.format("%.2f", transaction.getAmount());
     }
 
     private static void loadTransactions() {
@@ -248,7 +240,9 @@ public class App {
             double amount = Double.parseDouble(parts[4]);
 
             transactions.add(new Transaction(date, time, description, vendor, amount));
-        } catch (Exception e) {
+        } catch (DateTimeParseException e) {
+            System.out.println("Skipping a line that isn't in date|time|description|vendor|amount format: " + line);
+        } catch (NumberFormatException e) {
             System.out.println("Skipping a line that isn't in date|time|description|vendor|amount format: " + line);
         }
     }
@@ -267,6 +261,36 @@ public class App {
         List<Transaction> matches = new ArrayList<>();
         for (Transaction transaction : transactions) {
             if (transaction.getDate().getYear() == year) {
+                matches.add(transaction);
+            }
+        }
+        return matches;
+    }
+
+    private static List<Transaction> findDeposits() {
+        List<Transaction> matches = new ArrayList<>();
+        for (Transaction transaction : transactions) {
+            if (transaction.getAmount() > 0) {
+                matches.add(transaction);
+            }
+        }
+        return matches;
+    }
+
+    private static List<Transaction> findPayments() {
+        List<Transaction> matches = new ArrayList<>();
+        for (Transaction transaction : transactions) {
+            if (transaction.getAmount() < 0) {
+                matches.add(transaction);
+            }
+        }
+        return matches;
+    }
+
+    private static List<Transaction> findByVendor(String vendor) {
+        List<Transaction> matches = new ArrayList<>();
+        for (Transaction transaction : transactions) {
+            if (transaction.getVendor().equalsIgnoreCase(vendor)) {
                 matches.add(transaction);
             }
         }
@@ -292,6 +316,10 @@ public class App {
                     String.format("%.2f", transaction.getAmount()));
         }
 
+        displayTotals(entries);
+    }
+
+    private static void displayTotals(List<Transaction> entries) {
         System.out.println();
         if (entries.size() == 1) {
             System.out.println("1 transaction");
@@ -311,7 +339,7 @@ public class App {
 
     private static String formatMoney(double amount) {
         String text = String.format("$%,.2f", Math.abs(amount));
-        if (amount < -0.005) {
+        if (amount < -ZERO_TOLERANCE) {
             return "-" + text;
         }
         return text;
