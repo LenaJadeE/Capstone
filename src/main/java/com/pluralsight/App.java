@@ -29,7 +29,7 @@ public class App {
         String command;
         do {
             System.out.println();
-            System.out.println(" Home ");
+            System.out.println("=== Home ===");
             System.out.println("D) Add Deposit");
             System.out.println("P) Make Payment");
             System.out.println("L) Ledger");
@@ -51,7 +51,7 @@ public class App {
         String command;
         do {
             System.out.println();
-            System.out.println(" Ledger ");
+            System.out.println("=== Ledger ===");
             System.out.println("A) All");
             System.out.println("D) Deposits");
             System.out.println("P) Payments");
@@ -75,7 +75,7 @@ public class App {
         String command;
         do {
             System.out.println();
-            System.out.println(" Reports ");
+            System.out.println("=== Reports ===");
             System.out.println("1) Month To Date");
             System.out.println("2) Previous Month");
             System.out.println("3) Year To Date");
@@ -99,7 +99,7 @@ public class App {
 
     private static void addDeposit() {
         System.out.println();
-        System.out.println(" Add Deposit ");
+        System.out.println("=== Add Deposit ===");
         Transaction deposit = askForTransaction(1);
 
         if (saveTransaction(deposit)) {
@@ -110,7 +110,7 @@ public class App {
 
     private static void makePayment() {
         System.out.println();
-        System.out.println(" Make Payment ");
+        System.out.println("=== Make Payment ===");
         Transaction payment = askForTransaction(-1);
 
         if (saveTransaction(payment)) {

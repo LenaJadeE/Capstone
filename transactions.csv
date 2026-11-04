@@ -1,9 +1,213 @@
 date|time|description|vendor|amount
-2025-11-14|09:12:44|Monthly design retainer|Brightline Studio|1200.00
-2025-12-03|13:05:10|Phone bill|Verizon|-87.96
-2026-01-09|08:41:02|Latte|Starbucks|-4.75
-2026-02-20|15:30:18|Invoice 1042 paid|Acme Corp|2450.00
-2026-09-04|10:22:31|Office supplies|Staples|-63.18
-2026-09-18|14:09:55|Consulting payment|Northwind Traders|1800.00
-2026-10-12|17:48:03|Groceries for the office|Costco|-142.37
-2026-10-29|11:15:26|Invoice 1051 paid|Acme Corp|960.00
+2025-01-03|17:05:07|Latte|Starbucks|-4.11
+2025-01-12|09:00:28|Breakfast sandwich|Starbucks|-11.94
+2025-01-12|14:33:27|Phone bill|Verizon|-87.96
+2025-01-13|14:24:35|Design work payment|Brightline Studio|515.94
+2025-01-14|12:34:30|Phone bill|Verizon|-107.21
+2025-01-16|08:47:04|Music subscription|Spotify|-11.46
+2025-01-24|10:20:34|Invoice 1528 paid|Acme Corp|2435.72
+2025-01-24|12:14:32|Music subscription|Spotify|-10.93
+2025-01-28|11:41:41|Printer ink|Amazon|-22.75
+2025-01-30|11:45:53|Music subscription|Spotify|-11.80
+2025-02-05|10:35:46|Pens and notebooks|Staples|-65.92
+2025-02-10|13:41:22|Ergonomic keyboard|Amazon|-72.23
+2025-02-12|16:22:14|Shelving|Home Depot|-62.25
+2025-02-15|09:14:11|Project deposit|Northwind Traders|495.94
+2025-02-15|09:15:01|Breakfast sandwich|Starbucks|-9.61
+2025-02-16|09:22:37|Internet bill|Comcast|-88.92
+2025-02-19|08:26:55|Internet bill|Comcast|-94.14
+2025-02-19|18:41:21|Toner|Staples|-89.70
+2025-02-24|12:45:34|Office supplies|Costco|-117.02
+2025-03-01|08:23:36|Internet bill|Comcast|-74.86
+2025-03-07|17:49:39|Invoice 1240 paid|Joe|1151.21
+2025-03-21|08:34:13|Software subscription|Adobe|-40.04
+2025-03-24|09:09:46|Music subscription|Spotify|-10.62
+2025-03-25|18:03:48|Gas|Shell|-51.81
+2025-03-29|09:51:26|USB-C cable|Amazon|-35.20
+2025-04-01|09:22:45|Gas|Shell|-36.09
+2025-04-04|13:32:32|Coffee|Starbucks|-12.95
+2025-04-06|17:23:51|Invoice 1469 paid|Acme Corp|1832.42
+2025-04-13|18:36:03|Printer ink|Amazon|-105.16
+2025-04-16|16:14:30|Software subscription|Adobe|-22.96
+2025-04-19|09:50:09|Phone bill|Verizon|-78.87
+2025-04-23|16:49:07|Refund|Amazon|61.39
+2025-04-24|18:57:58|Internet bill|Comcast|-88.48
+2025-04-25|18:30:25|Design work payment|Brightline Studio|1734.03
+2025-04-30|13:08:01|Invoice 1548 paid|Acme Corp|2879.10
+2025-05-05|17:32:59|Coffee|Starbucks|-5.27
+2025-05-09|16:12:32|Kitchen supplies|Costco|-256.39
+2025-05-09|16:12:55|Kitchen supplies|Costco|-83.88
+2025-05-13|08:54:09|Internet bill|Comcast|-89.40
+2025-05-17|15:39:25|Gas fill-up|Shell|-52.11
+2025-05-24|14:53:46|Breakfast sandwich|Starbucks|-6.66
+2025-05-26|08:48:11|Kitchen supplies|Costco|-240.72
+2025-05-27|10:23:30|Design work payment|Brightline Studio|1215.98
+2025-05-27|16:49:00|Gas fill-up|Shell|-73.70
+2025-06-02|18:58:11|Refund|Amazon|47.24
+2025-06-20|16:57:08|Consulting payment|Vertex Logistics|1054.74
+2025-06-22|13:48:50|Software subscription|Adobe|-27.45
+2025-06-23|18:32:55|Design work payment|Brightline Studio|1346.27
+2025-06-26|18:56:34|Music subscription|Spotify|-11.60
+2025-06-27|13:28:51|Invoice 1450 paid|Joe|1188.59
+2025-06-29|14:08:38|Music subscription|Spotify|-10.42
+2025-06-30|08:05:56|Phone bill|Verizon|-87.25
+2025-07-08|11:27:32|Gas|Shell|-65.21
+2025-07-13|09:39:02|Internet bill|Comcast|-73.87
+2025-07-14|17:11:28|Paycheck|Acme Corp|2258.27
+2025-07-18|15:12:23|Design work payment|Brightline Studio|721.30
+2025-07-19|09:19:34|Music subscription|Spotify|-11.38
+2025-07-21|14:36:59|Music subscription|Spotify|-11.15
+2025-07-22|09:56:44|Gas|Shell|-51.28
+2025-07-25|10:33:17|Latte|Starbucks|-5.68
+2025-07-26|09:15:27|Consulting payment|Vertex Logistics|2766.90
+2025-07-30|15:33:39|Invoice 1782 paid|Northwind Traders|1822.53
+2025-07-31|15:08:35|Phone bill|Verizon|-109.86
+2025-08-04|17:53:04|Phone bill|Verizon|-73.04
+2025-08-12|14:59:23|Shelving|Home Depot|-196.50
+2025-08-12|16:03:35|Toner|Staples|-33.46
+2025-08-16|12:29:09|Software subscription|Adobe|-20.87
+2025-08-18|12:00:02|Refund|Amazon|74.68
+2025-08-18|14:14:55|Phone bill|Verizon|-100.00
+2025-08-19|08:56:06|Invoice 1369 paid|Joe|677.73
+2025-08-19|10:24:40|Paint|Home Depot|-38.69
+2025-08-20|08:05:37|Refund|Amazon|56.02
+2025-08-28|08:51:38|Music subscription|Spotify|-11.67
+2025-08-31|09:55:38|Consulting payment|Vertex Logistics|2073.22
+2025-09-02|10:06:39|Printer paper|Staples|-94.06
+2025-09-02|18:37:36|Paint|Home Depot|-155.49
+2025-09-03|11:01:40|Latte|Starbucks|-8.99
+2025-09-04|12:19:08|Ergonomic keyboard|Amazon|-46.35
+2025-09-04|17:13:38|Team lunch|Chipotle|-47.38
+2025-09-06|17:57:01|Phone bill|Verizon|-88.04
+2025-09-07|12:53:55|Gas fill-up|Shell|-39.01
+2025-09-08|12:57:00|Paycheck|Acme Corp|2415.42
+2025-09-13|18:19:28|Latte|Starbucks|-13.49
+2025-09-20|15:38:14|Breakfast sandwich|Starbucks|-7.99
+2025-09-23|17:11:07|Invoice 1455 paid|Vertex Logistics|1519.03
+2025-09-24|13:22:20|Internet bill|Comcast|-92.08
+2025-09-25|10:45:29|Toner|Staples|-50.07
+2025-09-27|09:04:49|Light bulbs|Home Depot|-66.73
+2025-10-01|13:49:29|Team lunch|Chipotle|-60.01
+2025-10-06|10:24:12|Team lunch|Chipotle|-55.91
+2025-10-06|14:47:32|Phone bill|Verizon|-87.87
+2025-10-08|11:35:53|Consulting payment|Vertex Logistics|1261.86
+2025-10-19|08:34:05|Coffee|Starbucks|-7.98
+2025-10-21|11:49:26|Gas|Shell|-53.52
+2025-10-22|13:55:47|Ergonomic keyboard|Amazon|-39.86
+2025-10-27|12:58:55|Internet bill|Comcast|-75.16
+2025-10-28|18:51:36|Software subscription|Adobe|-38.93
+2025-11-01|10:33:51|Invoice 1399 paid|Acme Corp|2941.87
+2025-11-02|16:39:46|Gas|Shell|-62.25
+2025-11-03|14:34:33|Team lunch|Chipotle|-62.15
+2025-11-07|08:30:33|Internet bill|Comcast|-82.20
+2025-11-08|08:35:45|Kitchen supplies|Costco|-60.90
+2025-11-20|12:09:17|Music subscription|Spotify|-11.21
+2025-11-22|11:07:44|Coffee|Starbucks|-13.99
+2025-11-23|18:36:21|Phone bill|Verizon|-97.13
+2025-11-28|16:51:48|Light bulbs|Home Depot|-193.77
+2025-12-01|15:09:30|Breakfast sandwich|Starbucks|-11.01
+2025-12-05|09:44:14|Latte|Starbucks|-12.76
+2025-12-05|09:56:12|Music subscription|Spotify|-10.06
+2025-12-07|08:18:44|Latte|Starbucks|-11.68
+2025-12-11|17:42:47|Project deposit|Northwind Traders|1887.73
+2025-12-19|11:11:32|Software subscription|Adobe|-30.51
+2025-12-23|17:22:40|Team lunch|Chipotle|-33.07
+2025-12-26|18:26:06|Toner|Staples|-83.09
+2025-12-27|11:38:43|Invoice 1582 paid|Northwind Traders|1092.37
+2025-12-28|15:49:52|Shelving|Home Depot|-78.53
+2025-12-28|16:22:50|Gas|Shell|-35.03
+2026-01-01|11:25:15|Phone bill|Verizon|-62.06
+2026-01-06|13:47:06|Office supplies|Costco|-134.19
+2026-01-11|15:07:33|Internet bill|Comcast|-91.20
+2026-01-12|16:01:31|Office supplies|Costco|-156.50
+2026-01-17|13:58:12|Invoice 1524 paid|Joe|1185.05
+2026-01-23|14:35:42|Internet bill|Comcast|-81.44
+2026-01-24|09:35:33|Project deposit|Northwind Traders|2043.61
+2026-01-24|13:06:12|Office supplies|Costco|-138.87
+2026-01-26|18:59:16|Phone bill|Verizon|-96.77
+2026-02-07|11:52:52|Gas fill-up|Shell|-36.26
+2026-02-10|13:03:42|Team lunch|Chipotle|-35.94
+2026-02-10|14:43:21|Software subscription|Adobe|-21.50
+2026-02-11|18:37:35|Paycheck|Acme Corp|3059.77
+2026-02-15|15:18:26|Internet bill|Comcast|-87.69
+2026-02-16|16:55:24|Software subscription|Adobe|-21.01
+2026-02-19|10:38:39|Paycheck|Acme Corp|2014.50
+2026-02-20|14:55:05|Gas fill-up|Shell|-36.21
+2026-02-22|14:46:27|Phone bill|Verizon|-108.42
+2026-03-04|12:58:34|Kitchen supplies|Costco|-116.48
+2026-03-04|18:02:22|Paint|Home Depot|-137.94
+2026-03-05|09:08:00|Breakfast sandwich|Starbucks|-8.98
+2026-03-06|12:43:07|Software subscription|Adobe|-32.71
+2026-03-08|18:33:22|Music subscription|Spotify|-11.27
+2026-03-15|12:42:35|Invoice 1978 paid|Northwind Traders|1128.50
+2026-03-20|14:22:00|Kitchen supplies|Costco|-214.32
+2026-03-21|17:51:10|Refund|Amazon|45.82
+2026-03-22|16:13:07|Internet bill|Comcast|-84.25
+2026-03-29|08:52:26|Lunch|Chipotle|-62.99
+2026-04-06|08:41:16|Invoice 1967 paid|Joe|560.05
+2026-04-08|09:53:11|Lunch|Chipotle|-29.06
+2026-04-16|16:11:33|Monitor stand|Amazon|-83.93
+2026-04-19|14:43:06|Kitchen supplies|Costco|-168.56
+2026-04-22|16:33:40|Internet bill|Comcast|-72.70
+2026-04-23|16:19:09|Internet bill|Comcast|-81.11
+2026-04-25|09:54:32|Software subscription|Adobe|-37.12
+2026-04-29|16:26:50|Paint|Home Depot|-101.01
+2026-05-04|14:09:31|Phone bill|Verizon|-99.77
+2026-05-05|15:59:35|Coffee|Starbucks|-11.39
+2026-05-08|17:03:59|Music subscription|Spotify|-11.51
+2026-05-10|08:58:19|Invoice 1911 paid|Joe|1216.37
+2026-05-10|10:50:00|Coffee|Starbucks|-8.30
+2026-05-11|09:42:54|Phone bill|Verizon|-98.99
+2026-05-11|15:35:51|Lunch|Chipotle|-20.96
+2026-05-13|10:05:19|Internet bill|Comcast|-87.87
+2026-05-14|14:12:57|Office supplies|Costco|-160.32
+2026-05-20|13:03:59|Gas|Shell|-40.55
+2026-05-20|15:27:22|Music subscription|Spotify|-11.44
+2026-05-20|18:19:01|Gas fill-up|Shell|-47.52
+2026-05-23|09:17:13|Refund|Amazon|48.77
+2026-05-26|10:29:05|Invoice 1963 paid|Acme Corp|2203.85
+2026-05-30|13:23:11|Refund|Amazon|71.23
+2026-05-30|16:43:35|Internet bill|Comcast|-75.71
+2026-05-31|11:10:20|Music subscription|Spotify|-10.65
+2026-06-05|10:59:08|Software subscription|Adobe|-37.77
+2026-06-06|12:35:51|Light bulbs|Home Depot|-99.45
+2026-06-09|15:45:59|Music subscription|Spotify|-11.12
+2026-06-10|17:43:36|Design work payment|Brightline Studio|1757.28
+2026-06-15|09:29:29|Music subscription|Spotify|-11.63
+2026-06-18|15:27:56|Light bulbs|Home Depot|-26.96
+2026-06-18|15:43:20|Project deposit|Northwind Traders|2161.83
+2026-07-01|12:08:21|Software subscription|Adobe|-49.15
+2026-07-03|18:49:00|Latte|Starbucks|-7.03
+2026-07-06|12:34:34|Latte|Starbucks|-8.32
+2026-07-08|13:23:29|Kitchen supplies|Costco|-230.79
+2026-07-10|09:13:19|Design work payment|Brightline Studio|361.35
+2026-07-12|08:04:29|Kitchen supplies|Costco|-137.04
+2026-07-16|09:10:39|Invoice 1536 paid|Acme Corp|1714.29
+2026-07-18|18:54:31|Gas|Shell|-65.90
+2026-07-21|12:16:28|Kitchen supplies|Costco|-105.22
+2026-07-21|18:07:42|Lunch|Chipotle|-43.45
+2026-07-26|14:02:08|Music subscription|Spotify|-11.51
+2026-07-27|17:01:22|Music subscription|Spotify|-11.91
+2026-07-28|17:42:50|Project deposit|Northwind Traders|1328.21
+2026-08-05|14:09:57|Music subscription|Spotify|-10.94
+2026-08-11|18:12:30|USB-C cable|Amazon|-88.19
+2026-08-13|08:27:29|Monitor stand|Amazon|-16.66
+2026-08-19|10:52:03|Music subscription|Spotify|-11.43
+2026-08-20|15:58:43|Team lunch|Chipotle|-33.50
+2026-08-25|17:28:10|Music subscription|Spotify|-11.91
+2026-09-01|15:00:23|Monitor stand|Amazon|-14.73
+2026-09-03|10:18:15|Phone bill|Verizon|-98.35
+2026-09-08|15:32:17|Phone bill|Verizon|-87.79
+2026-09-17|15:54:56|Ergonomic keyboard|Amazon|-101.36
+2026-09-24|09:28:44|Music subscription|Spotify|-10.91
+2026-09-30|10:08:17|Phone bill|Verizon|-82.86
+2026-10-09|17:32:22|Phone bill|Verizon|-86.29
+2026-10-11|18:11:01|Gas fill-up|Shell|-54.41
+2026-10-14|09:24:16|Team lunch|Chipotle|-29.43
+2026-10-15|12:02:41|Desk lamp|Amazon|-107.46
+2026-10-17|10:15:14|Shelving|Home Depot|-87.61
+2026-10-17|18:36:45|Lunch|Chipotle|-47.57
+2026-10-22|14:42:37|Invoice 1698 paid|Joe|229.89
+2026-10-27|09:58:35|Office supplies|Costco|-60.06
+2026-10-29|09:12:44|Coffee|Starbucks|-5.75
+2026-10-29|13:45:09|Shelving|Home Depot|-77.84
