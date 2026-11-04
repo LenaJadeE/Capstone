@@ -12,7 +12,7 @@ Transactions are saved in transactions.csv, and you can look at them in a ledger
 - Bad input never crashes the app: it explains the problem and asks again
 - A line in the data file that can't be read is skipped with a message, instead of stopping the app
 
-### How to run it
+### How to Run It
 1. Clone the repository and open it in IntelliJ
 2. Make sure transactions.csv is in the project's top folder, next to pom.xml
 3. Run App.java
