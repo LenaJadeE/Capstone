@@ -311,7 +311,7 @@ public class App {
 
     private static String formatMoney(double amount) {
         String text = String.format("$%,.2f", Math.abs(amount));
-        if (amount < 0) {
+        if (amount < -0.005) {
             return "-" + text;
         }
         return text;
