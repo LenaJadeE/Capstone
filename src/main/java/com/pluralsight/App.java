@@ -9,15 +9,14 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class App {
-    private static final String TransactionsFile = "transactions.csv";
-    private static final DateTimeFormatter TimeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
-    private static final String RowFormat = "%-10s  %-8s  %-30s  %-22s  %10s%n";
+    private static final String TRANSACTIONS_FILE = "transactions.csv";
+    private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private static final String ROW_FORMAT = "%-10s  %-8s  %-30s  %-22s  %10s%n";
     private static final Scanner scanner = new Scanner(System.in);
     private static final List<Transaction> transactions = new ArrayList<>();
 
@@ -120,7 +119,6 @@ public class App {
         pressEnterToContinue();
     }
 
-
     private static void displayAllEntries() {
         displayEntries("All Transactions", transactions);
         pressEnterToContinue();
@@ -158,22 +156,33 @@ public class App {
     }
 
     private static void displayPreviousMonth() {
-        System.out.println("TODO: display previous month");
+        LocalDate lastMonth = LocalDate.now().minusMonths(1);
+
+        displayEntries("Previous Month", findByMonth(lastMonth.getYear(), lastMonth.getMonthValue()));
         pressEnterToContinue();
     }
 
     private static void displayYearToDate() {
-        System.out.println("TODO: display year to date");
+        displayEntries("Year To Date", findByYear(LocalDate.now().getYear()));
         pressEnterToContinue();
     }
 
     private static void displayPreviousYear() {
-        System.out.println("TODO: display previous year");
+        displayEntries("Previous Year", findByYear(LocalDate.now().getYear() - 1));
         pressEnterToContinue();
     }
 
     private static void searchByVendor() {
-        System.out.println("TODO: search by vendor");
+        String vendor = promptForString("Vendor name: ");
+
+        List<Transaction> matches = new ArrayList<>();
+        for (Transaction transaction : transactions) {
+            if (transaction.getVendor().equalsIgnoreCase(vendor)) {
+                matches.add(transaction);
+            }
+        }
+
+        displayEntries("Vendor: " + vendor, matches);
         pressEnterToContinue();
     }
 
@@ -181,10 +190,10 @@ public class App {
         String description = promptForString("Description: ");
         String vendor = promptForString("Vendor: ");
 
-        double amount = promptForDouble("Amount: ");
+        double amount = promptForAmount();
         while (amount <= 0) {
             System.out.println("The amount must be more than 0.");
-            amount = promptForDouble("Amount: ");
+            amount = promptForAmount();
         }
 
         return new Transaction(LocalDate.now(), LocalTime.now(),
@@ -192,9 +201,9 @@ public class App {
     }
 
     private static boolean saveTransaction(Transaction transaction) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(TransactionsFile, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(TRANSACTIONS_FILE, true))) {
             String line = transaction.getDate() + "|"
-                    + transaction.getTime().format(TimeFormat) + "|"
+                    + transaction.getTime().format(TIME_FORMAT) + "|"
                     + transaction.getDescription() + "|"
                     + transaction.getVendor() + "|"
                     + String.format("%.2f", transaction.getAmount());
@@ -202,13 +211,13 @@ public class App {
             transactions.add(transaction);
             return true;
         } catch (IOException e) {
-            System.out.println("ERROR: Could not save to " + TransactionsFile + ": " + e.getMessage());
+            System.out.println("ERROR: Could not save to " + TRANSACTIONS_FILE + ": " + e.getMessage());
             return false;
         }
     }
 
     private static void loadTransactions() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(TransactionsFile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(TRANSACTIONS_FILE))) {
             reader.readLine();
             String line;
             while ((line = reader.readLine()) != null) {
@@ -217,16 +226,21 @@ public class App {
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("No " + TransactionsFile + " found, so the ledger starts empty.");
+            System.out.println("No " + TRANSACTIONS_FILE + " found, so the ledger starts empty.");
         } catch (IOException e) {
-            System.out.println("ERROR: Could not read " + TransactionsFile + ": " + e.getMessage());
+            System.out.println("ERROR: Could not read " + TRANSACTIONS_FILE + ": " + e.getMessage());
         }
     }
 
     private static void addTransactionFromLine(String line) {
-        try {
-            String[] parts = line.split("\\|");
+        String[] parts = line.split("\\|");
 
+        if (parts.length != 5) {
+            System.out.println("Skipping a line that isn't in date|time|description|vendor|amount format: " + line);
+            return;
+        }
+
+        try {
             LocalDate date = LocalDate.parse(parts[0]);
             LocalTime time = LocalTime.parse(parts[1]);
             String description = parts[2];
@@ -234,7 +248,7 @@ public class App {
             double amount = Double.parseDouble(parts[4]);
 
             transactions.add(new Transaction(date, time, description, vendor, amount));
-        } catch (DateTimeParseException | NumberFormatException | ArrayIndexOutOfBoundsException e) {
+        } catch (Exception e) {
             System.out.println("Skipping a line that isn't in date|time|description|vendor|amount format: " + line);
         }
     }
@@ -249,7 +263,15 @@ public class App {
         return matches;
     }
 
-
+    private static List<Transaction> findByYear(int year) {
+        List<Transaction> matches = new ArrayList<>();
+        for (Transaction transaction : transactions) {
+            if (transaction.getDate().getYear() == year) {
+                matches.add(transaction);
+            }
+        }
+        return matches;
+    }
 
     private static void displayEntries(String title, List<Transaction> entries) {
         System.out.println();
@@ -260,22 +282,26 @@ public class App {
             return;
         }
 
-        System.out.printf(RowFormat, "Date", "Time", "Description", "Vendor", "Amount");
+        System.out.printf(ROW_FORMAT, "Date", "Time", "Description", "Vendor", "Amount");
         for (Transaction transaction : entries) {
-            System.out.printf(RowFormat,
+            System.out.printf(ROW_FORMAT,
                     transaction.getDate(),
-                    transaction.getTime().format(TimeFormat),
+                    transaction.getTime().format(TIME_FORMAT),
                     transaction.getDescription(),
                     transaction.getVendor(),
                     String.format("%.2f", transaction.getAmount()));
         }
 
         System.out.println();
-        System.out.println(entries.size() + (entries.size() == 1 ? " transaction" : " transactions"));
-        System.out.println("Total: " + formatMoney(sumOf(entries)));
+        if (entries.size() == 1) {
+            System.out.println("1 transaction");
+        } else {
+            System.out.println(entries.size() + " transactions");
+        }
+        System.out.println("Total: " + formatMoney(calculateTotal(entries)));
     }
 
-    private static double sumOf(List<Transaction> entries) {
+    private static double calculateTotal(List<Transaction> entries) {
         double total = 0;
         for (Transaction transaction : entries) {
             total += transaction.getAmount();
@@ -297,9 +323,9 @@ public class App {
         scanner.nextLine();
     }
 
-    private static double promptForDouble(String prompt) {
+    private static double promptForAmount() {
         while (true) {
-            System.out.print(prompt);
+            System.out.print("Amount: ");
             try {
                 return Double.parseDouble(scanner.nextLine().trim());
             } catch (NumberFormatException e) {
