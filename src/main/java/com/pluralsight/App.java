@@ -327,7 +327,12 @@ public class App {
         while (true) {
             System.out.print("Amount: ");
             try {
-                return Double.parseDouble(scanner.nextLine().trim());
+                double amount = Double.parseDouble(scanner.nextLine().trim());
+                if (Double.isNaN(amount) || Double.isInfinite(amount)) {
+                    System.out.println("Please enter a number, like 89.50.");
+                } else {
+                    return amount;
+                }
             } catch (NumberFormatException e) {
                 System.out.println("Please enter a number, like 89.50.");
             }

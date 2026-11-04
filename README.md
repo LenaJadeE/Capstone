@@ -25,8 +25,12 @@ Transactions are saved in transactions.csv, and you can look at them in a ledger
 ### Screenshots
 
 ![img_1.png](img_1.png) 
+![img_8.png](img_8.png)
 ![img_2.png](img_2.png)
+![img_9.png](img_9.png)
 ![img_3.png](img_3.png)
+![img_10.png](img_10.png)
+
 
 ### Interesting Code
 A deposit and a payment are the same kind of thing, so the app has one Transaction class and one list. 
