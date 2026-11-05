@@ -397,9 +397,9 @@ public class App {
     }
 
     private static void displayTotals(List<Transaction> entries) {
-        String count = "";
+        String count;
         if (entries.size() == 1) {
-            System.out.println("1 transaction");
+            count = "1 transaction";
         } else {
             count = entries.size() + " transactions";
         }
