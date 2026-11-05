@@ -333,11 +333,8 @@ public class App {
                                                         String description, String vendor, Double amount) {
         List<Transaction> results = new ArrayList<>();
         for (Transaction transaction : transactions) {
-            boolean matches = true;
+            boolean matches = startDate == null || !transaction.getDate().isBefore(startDate);
 
-            if (startDate != null && transaction.getDate().isBefore(startDate)) {
-                matches = false;
-            }
             if (endDate != null && transaction.getDate().isAfter(endDate)) {
                 matches = false;
             }
