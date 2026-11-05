@@ -93,6 +93,7 @@ public class App {
             System.out.println("3) Year To Date");
             System.out.println("4) Previous Year");
             System.out.println("5) Search by Vendor");
+            System.out.println("6) Custom Search");
             System.out.println("0) Back");
             System.out.print("Enter a command: ");
             command = scanner.nextLine().trim().toUpperCase();
@@ -103,6 +104,7 @@ public class App {
                 case "3" -> displayYearToDate();
                 case "4" -> displayPreviousYear();
                 case "5" -> searchByVendor();
+                case "6" -> customSearch();
                 case "0" -> System.out.println("Back to Ledger");
                 default -> System.out.println("That isn't a command. Try again.");
             }
@@ -174,6 +176,26 @@ public class App {
         String vendor = promptForString("Vendor name: ");
 
         displayEntries("Vendor: " + vendor, findByVendor(vendor));
+        pressEnterToContinue();
+    }
+
+    private static void customSearch() {
+        System.out.println();
+        System.out.println("=== Custom Search ===");
+        System.out.println("Answer only the questions you care about. Press Enter to skip one.");
+
+        LocalDate startDate = promptForOptionalDate("Start date (yyyy-MM-dd): ");
+        LocalDate endDate = promptForOptionalDate("End date (yyyy-MM-dd): ");
+        String description = promptForOptionalText("Description: ");
+        String vendor = promptForOptionalText("Vendor: ");
+        Double amount = promptForOptionalAmount();
+
+        if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
+            System.out.println("The start date is after the end date, so nothing can match.");
+        } else {
+            displayEntries("Custom Search Results",
+                    findByCustomSearch(startDate, endDate, description, vendor, amount));
+        }
         pressEnterToContinue();
     }
 
@@ -305,6 +327,34 @@ public class App {
         return matches;
     }
 
+    private static List<Transaction> findByCustomSearch(LocalDate startDate, LocalDate endDate,
+                                                        String description, String vendor, Double amount) {
+        List<Transaction> results = new ArrayList<>();
+        for (Transaction transaction : transactions) {
+            boolean matches = startDate == null || !transaction.getDate().isBefore(startDate);
+
+            if (endDate != null && transaction.getDate().isAfter(endDate)) {
+                matches = false;
+            }
+            if (!description.isEmpty()
+                    && !transaction.getDescription().toLowerCase().contains(description.toLowerCase())) {
+                matches = false;
+            }
+            if (!vendor.isEmpty()
+                    && !transaction.getVendor().toLowerCase().contains(vendor.toLowerCase())) {
+                matches = false;
+            }
+            if (amount != null && Math.abs(transaction.getAmount() - amount) >= ZERO_TOLERANCE) {
+                matches = false;
+            }
+
+            if (matches) {
+                results.add(transaction);
+            }
+        }
+        return results;
+    }
+
     private static void displayEntries(String title, List<Transaction> entries) {
         System.out.println();
         System.out.println("=== " + title + " ===");
@@ -371,6 +421,48 @@ public class App {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Please enter a number, like 89.50.");
+            }
+        }
+    }
+
+    private static LocalDate promptForOptionalDate(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+
+            if (input.isEmpty()) {
+                return null;
+            }
+            try {
+                return LocalDate.parse(input);
+            } catch (DateTimeParseException e) {
+                System.out.println("Please use yyyy-MM-dd, like 2026-10-31, or press Enter to skip.");
+            }
+        }
+    }
+
+    private static String promptForOptionalText(String prompt) {
+        System.out.print(prompt);
+        return scanner.nextLine().trim();
+    }
+
+    private static Double promptForOptionalAmount() {
+        while (true) {
+            System.out.print("Amount (like -89.50 for a payment): ");
+            String input = scanner.nextLine().trim();
+
+            if (input.isEmpty()) {
+                return null;
+            }
+            try {
+                double amount = Double.parseDouble(input);
+                if (Double.isNaN(amount) || Double.isInfinite(amount)) {
+                    System.out.println("Please enter a number, like -89.50, or press Enter to skip.");
+                } else {
+                    return amount;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a number, like -89.50, or press Enter to skip.");
             }
         }
     }
