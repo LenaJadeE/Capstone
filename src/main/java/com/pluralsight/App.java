@@ -25,8 +25,16 @@ public class App {
     private static final List<Transaction> transactions = new ArrayList<>();
 
     public static void main(String[] args) {
+        displayWelcomeBanner();
         loadTransactions();
         runHomeScreen();
+    }
+
+    private static void displayWelcomeBanner() {
+        System.out.println("=====================================");
+        System.out.println("            POCKET LEDGER");
+        System.out.println("   Every dollar in, every dollar out");
+        System.out.println("=====================================");
     }
 
     private static void runHomeScreen() {
