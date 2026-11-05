@@ -400,13 +400,15 @@ public class App {
     }
 
     private static void displayTotals(List<Transaction> entries) {
-        System.out.println();
+        String count = "";
         if (entries.size() == 1) {
             System.out.println("1 transaction");
         } else {
-            System.out.println(entries.size() + " transactions");
+            count = entries.size() + " transactions";
         }
-        System.out.println("Total: " + formatMoney(calculateTotal(entries)));
+
+        System.out.println();
+        System.out.println(count + " | Total: " + formatMoney(calculateTotal(entries)));
     }
 
     private static double calculateTotal(List<Transaction> entries) {
