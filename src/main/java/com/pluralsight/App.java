@@ -19,6 +19,7 @@ public class App {
     private static final String TRANSACTIONS_FILE = "transactions.csv";
     private static final String FILE_HEADER = "date|time|description|vendor|amount";
     private static final double ZERO_TOLERANCE = 0.005;
+    private static final int PAGE_SIZE = 20;
     private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss");
     private static final String ROW_FORMAT = "%-10s  %-8s  %-30s  %-22s  %10s%n";
     private static final Scanner scanner = new Scanner(System.in);
@@ -369,16 +370,33 @@ public class App {
         }
 
         System.out.printf(ROW_FORMAT, "Date", "Time", "Description", "Vendor", "Amount");
-        for (Transaction transaction : entries) {
+
+        boolean keepGoing = true;
+        int shown = 0;
+        for (int i = 0; i < entries.size() && keepGoing; i++) {
+            Transaction transaction = entries.get(i);
             System.out.printf(ROW_FORMAT,
                     transaction.getDate(),
                     transaction.getTime().format(TIME_FORMAT),
                     transaction.getDescription(),
                     transaction.getVendor(),
                     String.format("%.2f", transaction.getAmount()));
+            shown++;
+
+            if (shown % PAGE_SIZE == 0 && shown < entries.size()) {
+                keepGoing = wantsMore();
+            }
         }
 
+        if (!keepGoing) {
+            System.out.println("Stopped after " + shown + " of " + entries.size() + " transactions.");
+        }
         displayTotals(entries);
+    }
+
+    private static boolean wantsMore() {
+        System.out.print("Press Enter for more, or Q to stop: ");
+        return !scanner.nextLine().trim().equalsIgnoreCase("Q");
     }
 
     private static void displayTotals(List<Transaction> entries) {

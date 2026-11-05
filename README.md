@@ -13,6 +13,7 @@ Transactions are saved in transactions.csv, and you can look at them in a ledger
 - Bad input never crashes the app: it explains the problem and asks again
 - A line in the data file that can't be read is skipped with a message, instead of stopping the app
 - A welcome banner when the app starts
+- Long lists show 20 at a time, with Enter for more or Q to stop
 
 ### How to Run It
 1. Clone the repository and open it in IntelliJ
@@ -40,16 +41,15 @@ Answer the ones you care about and press Enter to skip the others. A skipped que
 ![img_17.png](img_17.png)
 For example, what happened between October 18 and October 31, 2026? Only the two dates are filled in, so the description, vendor, and amount are skipped:
 
-Custom Search
-
-The start and end dates include the days themselves
-Description and vendor match any part of the text, and capital letters don't matter, so star finds Starbucks
-Amount must match exactly, so type -89.50 to find a payment
-A mistyped date or amount asks again, and a start date after the end date is explained instead of showing an empty list
+- Dates include the start and end days
+- Description and vendor match part of the text, ignoring capitals (`star` finds Starbucks)
+- Amount must match exactly, so type `-89.50` to find a payment
+- A typo asks again, and a start date after the end date shows a message
 
 ### Interesting Code
-A deposit and a payment are the same kind of thing, so the app has one Transaction class and one list. 
-The only difference is the sign of the amount: positive for a deposit, negative for a payment. askForTransaction() asks the same questions for both and multiplies the amount by sign, which is 1 for a deposit and -1 for a payment. 
+A deposit and a payment are the same kind of thing, so the app has one transaction class and one list. 
+The only difference is the sign of the amount: positive for a deposit, negative for a payment. 
+askForTransaction() asks the same questions for both and multiplies the amount by sign, which is 1 for a deposit and -1 for a payment. 
 The user always types a positive number, so a payment can't be saved as a deposit by mistake: 
 
 ![img_4.png](img_4.png)
