@@ -42,7 +42,7 @@ public class App {
         String command;
         do {
             System.out.println();
-            System.out.println("=== Home ===");
+            System.out.println(" Home ");
             System.out.println("Current balance: " + formatMoney(calculateTotal(transactions)));
             System.out.println("D) Add Deposit");
             System.out.println("P) Make Payment");
@@ -65,7 +65,7 @@ public class App {
         String command;
         do {
             System.out.println();
-            System.out.println("=== Ledger ===");
+            System.out.println("    Ledger    ");
             System.out.println("A) All");
             System.out.println("D) Deposits");
             System.out.println("P) Payments");
@@ -89,7 +89,7 @@ public class App {
         String command;
         do {
             System.out.println();
-            System.out.println("=== Reports ===");
+            System.out.println("    Reports    ");
             System.out.println("1) Month To Date");
             System.out.println("2) Previous Month");
             System.out.println("3) Year To Date");
@@ -115,7 +115,7 @@ public class App {
 
     private static void addDeposit() {
         System.out.println();
-        System.out.println("=== Add Deposit ===");
+        System.out.println("    Add Deposit   ");
         Transaction deposit = askForTransaction(1);
 
         if (saveTransaction(deposit)) {
@@ -126,7 +126,7 @@ public class App {
 
     private static void makePayment() {
         System.out.println();
-        System.out.println("=== Make Payment ===");
+        System.out.println("    Make Payment   ");
         Transaction payment = askForTransaction(-1);
 
         if (saveTransaction(payment)) {
@@ -183,7 +183,7 @@ public class App {
 
     private static void customSearch() {
         System.out.println();
-        System.out.println("=== Custom Search ===");
+        System.out.println("   Custom Search   ");
         System.out.println("Answer only the questions you care about. Press Enter to skip one.");
 
         LocalDate startDate = promptForOptionalDate("Start date (yyyy-MM-dd): ");
@@ -349,7 +349,6 @@ public class App {
             if (amount != null && Math.abs(transaction.getAmount() - amount) >= ZERO_TOLERANCE) {
                 matches = false;
             }
-
             if (matches) {
                 results.add(transaction);
             }
@@ -397,15 +396,15 @@ public class App {
     }
 
     private static void displayTotals(List<Transaction> entries) {
-        String count;
+        String message;
         if (entries.size() == 1) {
-            count = "1 transaction";
+            message = "1 transaction";
         } else {
-            count = entries.size() + " transactions";
+            message = entries.size() + " transactions";
         }
 
         System.out.println();
-        System.out.println(count + " | Total: " + formatMoney(calculateTotal(entries)));
+        System.out.println(message + " | Total: " + formatMoney(calculateTotal(entries)));
     }
 
     private static double calculateTotal(List<Transaction> entries) {

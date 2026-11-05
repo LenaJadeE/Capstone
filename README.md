@@ -32,6 +32,7 @@ Transactions are saved in transactions.csv, and you can look at them in a ledger
 ![img_2.png](img_2.png)
 ![img_9.png](img_9.png)
 ![img_13.png](img_13.png)
+
 ![img_15.png](img_15.png)
 
 ### Custom Search
