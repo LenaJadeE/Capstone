@@ -42,6 +42,7 @@ public class App {
         do {
             System.out.println();
             System.out.println("=== Home ===");
+            System.out.println("Current balance: " + formatMoney(calculateTotal(transactions)));
             System.out.println("D) Add Deposit");
             System.out.println("P) Make Payment");
             System.out.println("L) Ledger");
@@ -271,9 +272,9 @@ public class App {
 
             transactions.add(new Transaction(date, time, description, vendor, amount));
         } catch (DateTimeParseException e) {
-            System.out.println("Skipping a line with a date or time that can't be read: " + line);
+            System.out.println("Skipping a line with a date or time that can't be read.");
         } catch (NumberFormatException e) {
-            System.out.println("Skipping a line with an amount that can't be read: " + line);
+            System.out.println("Skipping a line with an amount that can't be read.");
         }
     }
 
@@ -331,8 +332,11 @@ public class App {
                                                         String description, String vendor, Double amount) {
         List<Transaction> results = new ArrayList<>();
         for (Transaction transaction : transactions) {
-            boolean matches = startDate == null || !transaction.getDate().isBefore(startDate);
+            boolean matches = true;
 
+            if (startDate != null && transaction.getDate().isBefore(startDate)) {
+                matches = false;
+            }
             if (endDate != null && transaction.getDate().isAfter(endDate)) {
                 matches = false;
             }

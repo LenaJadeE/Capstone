@@ -1,4 +1,4 @@
-# Accounting Ledger
+# Pocket Ledger (Accounting Ledger)
 
 A command-line app that tracks every deposit and payment for a business or for personal use.
 Transactions are saved in transactions.csv, and you can look at them in a ledger or run reports by month, year, or vendor.
@@ -8,9 +8,11 @@ Transactions are saved in transactions.csv, and you can look at them in a ledger
 - Add a deposit or make a payment, and each one is saved to transactions.csv
 - Ledger screen: all transactions, deposits only, or payments only, with the oldest first and the newest at the bottom
 - Reports: Month To Date, Previous Month, Year To Date, Previous Year, and Search by Vendor
+- Custom Search: answer only the questions you care about and press Enter to skip the rest
 - A count and a total under every list, like 4 transactions and Total: $6,410.00
 - Bad input never crashes the app: it explains the problem and asks again
 - A line in the data file that can't be read is skipped with a message, instead of stopping the app
+- A welcome banner when the app starts
 
 ### How to Run It
 1. Clone the repository and open it in IntelliJ
@@ -20,17 +22,30 @@ Transactions are saved in transactions.csv, and you can look at them in a ledger
 
 ### Screen Map
 
-![img.png](img.png)
+![img_12.png](img_12.png)
 
 ### Screenshots
 
-![img_1.png](img_1.png) 
-![img_8.png](img_8.png)
+![img_16.png](img_16.png)
+![img_14.png](img_14.png)
 ![img_2.png](img_2.png)
 ![img_9.png](img_9.png)
-![img_3.png](img_3.png)
-![img_10.png](img_10.png)
+![img_13.png](img_13.png)
+![img_15.png](img_15.png)
 
+### Custom Search
+
+Option 6) Custom Search on the Reports screen asks five questions: start date, end date, description, vendor, and amount. 
+Answer the ones you care about and press Enter to skip the others. A skipped question doesn't filter anything, and a transaction has to match every answer you gave to show up.
+![img_17.png](img_17.png)
+For example, what happened between October 18 and October 31, 2026? Only the two dates are filled in, so the description, vendor, and amount are skipped:
+
+Custom Search
+
+The start and end dates include the days themselves
+Description and vendor match any part of the text, and capital letters don't matter, so star finds Starbucks
+Amount must match exactly, so type -89.50 to find a payment
+A mistyped date or amount asks again, and a start date after the end date is explained instead of showing an empty list
 
 ### Interesting Code
 A deposit and a payment are the same kind of thing, so the app has one Transaction class and one list. 
