@@ -228,7 +228,7 @@ public class App {
         String[] parts = line.split("\\|");
 
         if (parts.length != 5) {
-            System.out.println("Skipping a line that isn't in date|time|description|vendor|amount format: " + line);
+            System.out.println("Skipping a line in transactions.csv that isn't in the correct format.");
             return;
         }
 
