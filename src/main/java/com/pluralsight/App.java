@@ -355,7 +355,6 @@ public class App {
         return matches;
     }
 
-
     private static List<Transaction> findByCustomSearch(LocalDate startDate, LocalDate endDate,
                                                         String description, String vendor, Double amount) {
         List<Transaction> results = new ArrayList<>();
