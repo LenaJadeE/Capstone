@@ -103,9 +103,10 @@ public class App {
             System.out.println("2) Previous Month");
             System.out.println("3) Year To Date");
             System.out.println("4) Previous Year");
-            System.out.println("5) Search by Vendor");
-            System.out.println("6) Custom Search");
-            System.out.println("7) Partial Search");
+            System.out.println("5) Search By Vendor");
+            System.out.println("6) Search By Description");
+            System.out.println("7) Custom Search");
+            System.out.println("8) Partial Search");
             System.out.println("0) Back");
             System.out.println();
             System.out.print("Enter a command: ");
@@ -117,8 +118,9 @@ public class App {
                 case "3" -> displayYearToDate();
                 case "4" -> displayPreviousYear();
                 case "5" -> searchByVendor();
-                case "6" -> customSearch();
-                case "7" -> partialSearch();
+                case "6" -> searchByDescription();
+                case "7" -> customSearch();
+                case "8" -> partialSearch();
                 case "0" -> System.out.println("Back to Ledger");
                 default -> System.out.println("That isn't a command. Try again.");
             }
@@ -188,6 +190,13 @@ public class App {
         String vendor = promptForString("Vendor name: ");
 
         displayEntries("Vendor: " + vendor, findByVendor(vendor));
+        pressEnterToContinue();
+    }
+
+    private static void searchByDescription() {
+        String text = promptForString("Part of the description: ");
+
+        displayEntries("Description: " + text, findByDescription(text));
         pressEnterToContinue();
     }
 
@@ -341,6 +350,16 @@ public class App {
         List<Transaction> matches = new ArrayList<>();
         for (Transaction transaction : transactions) {
             if (transaction.getVendor().toLowerCase().contains(vendor.toLowerCase())) {
+                matches.add(transaction);
+            }
+        }
+        return matches;
+    }
+
+    private static List<Transaction> findByDescription(String text) {
+        List<Transaction> matches = new ArrayList<>();
+        for (Transaction transaction : transactions) {
+            if (transaction.getDescription().toLowerCase().contains(text.toLowerCase())) {
                 matches.add(transaction);
             }
         }
