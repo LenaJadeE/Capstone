@@ -14,6 +14,8 @@ Transactions are saved in transactions.csv, and you can look at them in a ledger
 - A line in the data file that can't be read is skipped with a message, instead of stopping the app
 - A welcome banner when the app starts
 - Long lists show 20 at a time, with Enter for more or Q to stop
+- Color: deposits show in green and payments in red (set `USE_COLOR` to `false` in `App.java` to turn it off)
+- Every screen has a title badge, and every list has gray dividers
 
 ### How to Run It
 1. Clone the repository and open it in IntelliJ
