@@ -138,12 +138,30 @@ The only difference is the sign of the amount: positive for a deposit, negative 
 askForTransaction() asks the same questions for both and multiplies the amount by sign, which is 1 for a deposit and -1 for a payment. 
 The user always types a positive number, so a payment can't be saved as a deposit by mistake: 
 
-![askForTransaction.png](screenshots/askForTransaction.png)
+    private static Transaction askForTransaction(int sign) {
+        String description = promptForString("Description: ");
+        String vendor = promptForString("Vendor: ");
+
+        double amount = promptForAmount();
+        while (amount <= 0) {
+            System.out.println("The amount must be more than 0.");
+            amount = promptForAmount();
+        }
+
+        return new Transaction(LocalDate.now(), LocalTime.now(),
+                description, vendor, sign * amount);
+    }
 
 Because payments are negative, the rest of the app needs no special cases.
 The Deposits list keeps the amounts above 0, the Payments list keeps the amounts below 0, and the balance is just every amount added together:
 
-![calculateTotal.png](screenshots/calculateTotal.png)
+    private static double calculateTotal(List<Transaction> entries) {
+        double total = 0;
+        for (Transaction transaction : entries) {
+            total += transaction.getAmount();
+        }
+        return total;
+    }
 
 The same method gives the total under every list and every report, from Deposits (all positive) to Search by Vendor (a mix).
 
