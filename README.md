@@ -86,7 +86,35 @@ Transactions are saved in transactions.csv, and you can look at them in a ledger
 
 ![ledgerScreen.png](screenshots/ledgerScreen.png)
 
+    private static void runReportsScreen() {
+        String command;
+        do {
+            displayTitle("Reports");
+            System.out.println("1) Month To Date");
+            System.out.println("2) Previous Month");
+            System.out.println("3) Year To Date");
+            System.out.println("4) Previous Year");
+            System.out.println("5) Search by Vendor");
+            System.out.println("6) Custom Search");
+            System.out.println("0) Back");
+            System.out.println();
+            System.out.print("Enter a command: ");
+            command = scanner.nextLine().trim().toUpperCase();
 
+            switch (command) {
+                case "1" -> displayMonthToDate();
+                case "2" -> displayPreviousMonth();
+                case "3" -> displayYearToDate();
+                case "4" -> displayPreviousYear();
+                case "5" -> searchByVendor();
+                case "6" -> customSearch();
+                case "0" -> System.out.println("Back to Ledger");
+                default -> System.out.println("That isn't a command. Try again.");
+            }
+        } while (!command.equals("0"));
+    }
+
+![reportScreen.png](screenshots/reportScreen.png)
 
 ### Custom Search
 
