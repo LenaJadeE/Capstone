@@ -27,7 +27,7 @@ Transactions are saved in transactions.csv, and you can look at them in a ledger
 
 ### Screen Map
 
-
+![screenMap.png](screenshots/screenMap.png)
 
 ### Screenshots
 
@@ -120,11 +120,11 @@ Transactions are saved in transactions.csv, and you can look at them in a ledger
         } while (!command.equals("0"));
     }
 
-
+![reportsScreen.png](screenshots/reportsScreen.png)
 
 ### Custom Search
 
-Option 7) Custom Search on the Reports screen asks five questions: start date, end date, description, vendor, and amount. 
+Option 6) Custom Search on the Reports screen asks five questions: start date, end date, description, vendor, and amount. 
 Answer the ones you care about and press Enter to skip the others. A skipped question doesn't filter anything, and a transaction has to match every answer you gave to show up.
 
 For example, what happened between October 18 and October 31, 2026? Only the two dates are filled in, so the description, vendor, and amount are skipped:
