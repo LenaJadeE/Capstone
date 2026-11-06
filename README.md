@@ -60,6 +60,34 @@ Transactions are saved in transactions.csv, and you can look at them in a ledger
 
 ![homeScreen.png](screenshots/homeScreen.png)
 
+    private static void runLedgerScreen() {
+        String command;
+        do {
+            displayTitle("Ledger");
+            System.out.println("A) All");
+            System.out.println("D) Deposits");
+            System.out.println("P) Payments");
+            System.out.println("R) Reports");
+            System.out.println("H) Home");
+            System.out.println();
+            System.out.print("Enter a command: ");
+            command = scanner.nextLine().trim().toUpperCase();
+
+            switch (command) {
+                case "A" -> displayAllEntries();
+                case "D" -> displayDeposits();
+                case "P" -> displayPayments();
+                case "R" -> runReportsScreen();
+                case "H" -> System.out.println("Back to Home");
+                default -> System.out.println("That isn't a command. Try again.");
+            }
+        } while (!command.equals("H"));
+    }
+
+![ledgerScreen.png](screenshots/ledgerScreen.png)
+
+
+
 ### Custom Search
 
 Option 6) Custom Search on the Reports screen asks five questions: start date, end date, description, vendor, and amount. 
