@@ -104,8 +104,8 @@ public class App {
             System.out.println("3) Year To Date");
             System.out.println("4) Previous Year");
             System.out.println("5) Search By Vendor");
-            System.out.println("6) Search By Description");
-            System.out.println("7) Custom Search");
+            System.out.println("6) Custom Search");
+            System.out.println("7) Search By Description");
             System.out.println("0) Back");
             System.out.println();
             System.out.print("Enter a command: ");
@@ -117,8 +117,8 @@ public class App {
                 case "3" -> displayYearToDate();
                 case "4" -> displayPreviousYear();
                 case "5" -> searchByVendor();
-                case "6" -> searchByDescription();
-                case "7" -> customSearch();
+                case "6" -> customSearch();
+                case "7" -> searchByDescription();
                 case "0" -> System.out.println("Back to Ledger");
                 default -> System.out.println("That isn't a command. Try again.");
             }
