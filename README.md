@@ -23,23 +23,48 @@ Transactions are saved in transactions.csv, and you can look at them in a ledger
 
 ### Screen Map
 
-![img_12.png](img_12.png)
+![screenMap.png](screenshots/screenMap.png)
 
 ### Screenshots
 
-![img_16.png](img_16.png)
-![img_14.png](img_14.png)
-![img_2.png](img_2.png)
-![img_9.png](img_9.png)
-![img_13.png](img_13.png)
+    private static void displayWelcomeBanner() {
+        System.out.println(style("P O C K E T L E D G E R", BOLD));
+        System.out.println(style(TITLE_LINE, GRAY));
+        System.out.println(style(" Every dollar in, Every dollar out  ", GRAY));
+    }
 
-![img_15.png](img_15.png)
+    private static void runHomeScreen() {
+        String command;
+        do {
+            displayTitle("Home");
+            double balance = calculateTotal(transactions);
+            System.out.println("Current balance: " + colorAmount(formatMoney(balance), balance));
+            System.out.println();
+            System.out.println("D) Add Deposit");
+            System.out.println("P) Make Payment");
+            System.out.println("L) Ledger");
+            System.out.println("X) Exit");
+            System.out.println();
+            System.out.print("Enter a command: ");
+            command = scanner.nextLine().trim().toUpperCase();
+
+            switch (command) {
+                case "D" -> addDeposit();
+                case "P" -> makePayment();
+                case "L" -> runLedgerScreen();
+                case "X" -> System.out.println("Goodbye!");
+                default -> System.out.println("That isn't a command. Try again.");
+            }
+        } while (!command.equals("X"));
+    }
+
+![homeScreen.png](screenshots/homeScreen.png)
 
 ### Custom Search
 
 Option 6) Custom Search on the Reports screen asks five questions: start date, end date, description, vendor, and amount. 
 Answer the ones you care about and press Enter to skip the others. A skipped question doesn't filter anything, and a transaction has to match every answer you gave to show up.
-![img_17.png](img_17.png)
+
 For example, what happened between October 18 and October 31, 2026? Only the two dates are filled in, so the description, vendor, and amount are skipped:
 
 - Dates include the start and end days
@@ -53,12 +78,12 @@ The only difference is the sign of the amount: positive for a deposit, negative 
 askForTransaction() asks the same questions for both and multiplies the amount by sign, which is 1 for a deposit and -1 for a payment. 
 The user always types a positive number, so a payment can't be saved as a deposit by mistake: 
 
-![img_4.png](img_4.png)
+![askForTransaction.png](screenshots/askForTransaction.png)
 
 Because payments are negative, the rest of the app needs no special cases.
 The Deposits list keeps the amounts above 0, the Payments list keeps the amounts below 0, and the balance is just every amount added together:
 
-![img_5.png](img_5.png)
+![calculateTotal.png](screenshots/calculateTotal.png)
 
 The same method gives the total under every list and every report, from Deposits (all positive) to Search by Vendor (a mix).
 
