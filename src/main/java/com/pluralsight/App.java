@@ -20,6 +20,15 @@ public class App {
     private static final String FILE_HEADER = "date|time|description|vendor|amount";
     private static final double ZERO_TOLERANCE = 0.005;
     private static final int PAGE_SIZE = 20;
+    private static final boolean USE_COLOR = true;
+    private static final String BOLD = "\u001B[1m";
+    private static final String BADGE = "\u001B[1;97;48;5;238m";
+    private static final String GRAY = "\u001B[38;5;244m";
+    private static final String GREEN = "\u001B[38;5;108m";
+    private static final String RED = "\u001B[38;5;167m";
+    private static final String RESET = "\u001B[0m";
+    private static final String TITLE_LINE = "-".repeat(40);
+    private static final String ROW_LINE = "-".repeat(88);
     private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss");
     private static final String ROW_FORMAT = "%-10s  %-8s  %-30s  %-22s  %10s%n";
     private static final Scanner scanner = new Scanner(System.in);
@@ -32,22 +41,23 @@ public class App {
     }
 
     private static void displayWelcomeBanner() {
-        System.out.println("=====================================");
-        System.out.println("            POCKET LEDGER");
-        System.out.println("   Every dollar in, every dollar out");
-        System.out.println("=====================================");
+        System.out.println(style("P O C K E T L E D G E R", BOLD));
+        System.out.println(style(TITLE_LINE, GRAY));
+        System.out.println(style(" Every dollar in, Every dollar out  ", GRAY));
     }
 
     private static void runHomeScreen() {
         String command;
         do {
+            displayTitle("Home");
+            double balance = calculateTotal(transactions);
+            System.out.println("Current balance: " + colorAmount(formatMoney(balance), balance));
             System.out.println();
-            System.out.println(" Home ");
-            System.out.println("Current balance: " + formatMoney(calculateTotal(transactions)));
             System.out.println("D) Add Deposit");
             System.out.println("P) Make Payment");
             System.out.println("L) Ledger");
             System.out.println("X) Exit");
+            System.out.println();
             System.out.print("Enter a command: ");
             command = scanner.nextLine().trim().toUpperCase();
 
@@ -64,13 +74,13 @@ public class App {
     private static void runLedgerScreen() {
         String command;
         do {
-            System.out.println();
-            System.out.println("    Ledger    ");
+            displayTitle("Ledger");
             System.out.println("A) All");
             System.out.println("D) Deposits");
             System.out.println("P) Payments");
             System.out.println("R) Reports");
             System.out.println("H) Home");
+            System.out.println();
             System.out.print("Enter a command: ");
             command = scanner.nextLine().trim().toUpperCase();
 
@@ -88,8 +98,7 @@ public class App {
     private static void runReportsScreen() {
         String command;
         do {
-            System.out.println();
-            System.out.println("    Reports    ");
+            displayTitle("Reports");
             System.out.println("1) Month To Date");
             System.out.println("2) Previous Month");
             System.out.println("3) Year To Date");
@@ -97,6 +106,7 @@ public class App {
             System.out.println("5) Search by Vendor");
             System.out.println("6) Custom Search");
             System.out.println("0) Back");
+            System.out.println();
             System.out.print("Enter a command: ");
             command = scanner.nextLine().trim().toUpperCase();
 
@@ -114,8 +124,7 @@ public class App {
     }
 
     private static void addDeposit() {
-        System.out.println();
-        System.out.println("    Add Deposit   ");
+        displayTitle("Add Deposit");
         Transaction deposit = askForTransaction(1);
 
         if (saveTransaction(deposit)) {
@@ -125,8 +134,7 @@ public class App {
     }
 
     private static void makePayment() {
-        System.out.println();
-        System.out.println("    Make Payment   ");
+        displayTitle("Make Payment");
         Transaction payment = askForTransaction(-1);
 
         if (saveTransaction(payment)) {
@@ -182,9 +190,8 @@ public class App {
     }
 
     private static void customSearch() {
-        System.out.println();
-        System.out.println("   Custom Search   ");
-        System.out.println("Answer only the questions you care about. Press Enter to skip one.");
+        displayTitle("Custom Search");
+        System.out.println(style("Answer only the questions you care about. Press Enter to skip one.", GRAY));
 
         LocalDate startDate = promptForOptionalDate("Start date (yyyy-MM-dd): ");
         LocalDate endDate = promptForOptionalDate("End date (yyyy-MM-dd): ");
@@ -349,6 +356,7 @@ public class App {
             if (amount != null && Math.abs(transaction.getAmount() - amount) >= ZERO_TOLERANCE) {
                 matches = false;
             }
+
             if (matches) {
                 results.add(transaction);
             }
@@ -357,26 +365,27 @@ public class App {
     }
 
     private static void displayEntries(String title, List<Transaction> entries) {
-        System.out.println();
-        System.out.println("=== " + title + " ===");
+        displayTitle(title);
 
         if (entries.isEmpty()) {
             System.out.println("No transactions found.");
             return;
         }
 
-        System.out.printf(ROW_FORMAT, "Date", "Time", "Description", "Vendor", "Amount");
+        System.out.print(style(String.format(ROW_FORMAT, "Date", "Time", "Description", "Vendor", "Amount"), GRAY));
+        System.out.println(style(ROW_LINE, GRAY));
 
         boolean keepGoing = true;
         int shown = 0;
         for (int i = 0; i < entries.size() && keepGoing; i++) {
             Transaction transaction = entries.get(i);
+            String amountText = String.format("%10.2f", transaction.getAmount());
             System.out.printf(ROW_FORMAT,
                     transaction.getDate(),
                     transaction.getTime().format(TIME_FORMAT),
                     transaction.getDescription(),
                     transaction.getVendor(),
-                    String.format("%.2f", transaction.getAmount()));
+                    colorAmount(amountText, transaction.getAmount()));
             shown++;
 
             if (shown % PAGE_SIZE == 0 && shown < entries.size()) {
@@ -384,8 +393,9 @@ public class App {
             }
         }
 
+        System.out.println(style(ROW_LINE, GRAY));
         if (!keepGoing) {
-            System.out.println("Stopped after " + shown + " of " + entries.size() + " transactions.");
+            System.out.println(style("Stopped after " + shown + " of " + entries.size() + " transactions.", GRAY));
         }
         displayTotals(entries);
     }
@@ -402,9 +412,9 @@ public class App {
         } else {
             message = entries.size() + " transactions";
         }
-
+        double total = calculateTotal(entries);
         System.out.println();
-        System.out.println(message + " | Total: " + formatMoney(calculateTotal(entries)));
+        System.out.println(style(message + " | Total: ", GRAY) + " " + colorAmount(formatMoney(total), total));
     }
 
     private static double calculateTotal(List<Transaction> entries) {
@@ -421,6 +431,29 @@ public class App {
             return "-" + text;
         }
         return text;
+    }
+
+    private static void displayTitle(String title) {
+        System.out.println();
+        System.out.println(style("  " + title + "  ", BADGE));
+        System.out.println(style(TITLE_LINE, GRAY));
+    }
+
+    private static String style(String text, String code) {
+        if (!USE_COLOR) {
+            return text;
+        }
+        return code + text + RESET;
+    }
+
+    private static String colorAmount(String text, double amount) {
+        if (amount > ZERO_TOLERANCE) {
+            return style(text, GREEN);
+        } else if (amount < -ZERO_TOLERANCE) {
+            return style(text, RED);
+        } else {
+            return text;
+        }
     }
 
     private static void pressEnterToContinue() {
