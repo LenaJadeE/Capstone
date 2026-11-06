@@ -105,6 +105,7 @@ public class App {
             System.out.println("4) Previous Year");
             System.out.println("5) Search by Vendor");
             System.out.println("6) Custom Search");
+            System.out.println("7) Partial Search");
             System.out.println("0) Back");
             System.out.println();
             System.out.print("Enter a command: ");
@@ -117,6 +118,7 @@ public class App {
                 case "4" -> displayPreviousYear();
                 case "5" -> searchByVendor();
                 case "6" -> customSearch();
+                case "7" -> partialSearch();
                 case "0" -> System.out.println("Back to Ledger");
                 default -> System.out.println("That isn't a command. Try again.");
             }
@@ -186,6 +188,15 @@ public class App {
         String vendor = promptForString("Vendor name: ");
 
         displayEntries("Vendor: " + vendor, findByVendor(vendor));
+        pressEnterToContinue();
+    }
+
+    private static void partialSearch() {
+        displayTitle("Partial Search");
+        System.out.println(style("Type part of a description or a vendor name.", GRAY));
+        String text = promptForString("Search text: ");
+
+        displayEntries("Partial Search: " + text, findByPartialText(text));
         pressEnterToContinue();
     }
 
@@ -329,7 +340,19 @@ public class App {
     private static List<Transaction> findByVendor(String vendor) {
         List<Transaction> matches = new ArrayList<>();
         for (Transaction transaction : transactions) {
-            if (transaction.getVendor().equalsIgnoreCase(vendor)) {
+            if (transaction.getVendor().toLowerCase().contains(vendor.toLowerCase())) {
+                matches.add(transaction);
+            }
+        }
+        return matches;
+    }
+
+    private static List<Transaction> findByPartialText(String text) {
+        String lowerText = text.toLowerCase();
+        List<Transaction> matches = new ArrayList<>();
+        for (Transaction transaction : transactions) {
+            if (transaction.getDescription().toLowerCase().contains(lowerText)
+                    || transaction.getVendor().toLowerCase().contains(lowerText)) {
                 matches.add(transaction);
             }
         }
