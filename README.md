@@ -16,8 +16,7 @@ Transactions are saved in transactions.csv, and you can look at them in a ledger
 - Long lists show 20 at a time, with Enter for more or Q to stop
 - Color: deposits show in green and payments in red (set `USE_COLOR` to `false` in `App.java` to turn it off)
 - Every screen has a title badge, and every list has gray dividers
-- - Search by Description: type part of a description and see every match
-- Partial Search: type part of a word and see every transaction whose description or vendor contains it
+- Search by Description: type part of a description and see every match
 
 ### How to Run It
 1. Clone the repository and open it in IntelliJ
@@ -101,7 +100,6 @@ Transactions are saved in transactions.csv, and you can look at them in a ledger
             System.out.println("5) Search By Vendor");
             System.out.println("6) Search By Description");
             System.out.println("7) Custom Search");
-            System.out.println("8) Partial Search");
             System.out.println("0) Back");
             System.out.println();
             System.out.print("Enter a command: ");
@@ -115,7 +113,6 @@ Transactions are saved in transactions.csv, and you can look at them in a ledger
                 case "5" -> searchByVendor();
                 case "6" -> searchByDescription();
                 case "7" -> customSearch();
-                case "8" -> partialSearch();
                 case "0" -> System.out.println("Back to Ledger");
                 default -> System.out.println("That isn't a command. Try again.");
             }

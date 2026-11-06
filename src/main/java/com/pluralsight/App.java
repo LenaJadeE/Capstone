@@ -106,7 +106,6 @@ public class App {
             System.out.println("5) Search By Vendor");
             System.out.println("6) Search By Description");
             System.out.println("7) Custom Search");
-            System.out.println("8) Partial Search");
             System.out.println("0) Back");
             System.out.println();
             System.out.print("Enter a command: ");
@@ -120,7 +119,6 @@ public class App {
                 case "5" -> searchByVendor();
                 case "6" -> searchByDescription();
                 case "7" -> customSearch();
-                case "8" -> partialSearch();
                 case "0" -> System.out.println("Back to Ledger");
                 default -> System.out.println("That isn't a command. Try again.");
             }
@@ -197,15 +195,6 @@ public class App {
         String text = promptForString("Part of the description: ");
 
         displayEntries("Description: " + text, findByDescription(text));
-        pressEnterToContinue();
-    }
-
-    private static void partialSearch() {
-        displayTitle("Partial Search");
-        System.out.println(style("Type part of a description or a vendor name.", GRAY));
-        String text = promptForString("Search text: ");
-
-        displayEntries("Partial Search: " + text, findByPartialText(text));
         pressEnterToContinue();
     }
 
@@ -366,17 +355,6 @@ public class App {
         return matches;
     }
 
-    private static List<Transaction> findByPartialText(String text) {
-        String lowerText = text.toLowerCase();
-        List<Transaction> matches = new ArrayList<>();
-        for (Transaction transaction : transactions) {
-            if (transaction.getDescription().toLowerCase().contains(lowerText)
-                    || transaction.getVendor().toLowerCase().contains(lowerText)) {
-                matches.add(transaction);
-            }
-        }
-        return matches;
-    }
 
     private static List<Transaction> findByCustomSearch(LocalDate startDate, LocalDate endDate,
                                                         String description, String vendor, Double amount) {
