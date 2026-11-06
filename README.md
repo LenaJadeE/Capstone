@@ -17,6 +17,7 @@ Transactions are saved in transactions.csv, and you can look at them in a ledger
 - Color: deposits show in green and payments in red (set `USE_COLOR` to `false` in `App.java` to turn it off)
 - Every screen has a title badge, and every list has gray dividers
 - Search by Description: type part of a description and see every match
+- The current balance is shown at the top of the Home screen.
 
 ### How to Run It
 1. Clone the repository and open it in IntelliJ
@@ -123,12 +124,12 @@ Transactions are saved in transactions.csv, and you can look at them in a ledger
 
 ### Custom Search
 
-Option 6) Custom Search on the Reports screen asks five questions: start date, end date, description, vendor, and amount. 
+Option 7) Custom Search on the Reports screen asks five questions: start date, end date, description, vendor, and amount. 
 Answer the ones you care about and press Enter to skip the others. A skipped question doesn't filter anything, and a transaction has to match every answer you gave to show up.
 
+For example, what happened between October 18 and October 31, 2026? Only the two dates are filled in, so the description, vendor, and amount are skipped:
 ![customSearchScreen.png](screenshots/customSearchScreen.png)
 
-For example, what happened between October 18 and October 31, 2026? Only the two dates are filled in, so the description, vendor, and amount are skipped:
 
 - Dates include the start and end days
 - Description and vendor match part of the text, ignoring capitals (`star` finds Starbucks)
